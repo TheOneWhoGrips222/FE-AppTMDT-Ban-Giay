@@ -8,8 +8,8 @@ export const dataProduct = [
             "https://images.unsplash.com/...",
             "https://images.unsplash.com/..."
         ],
-        category: "sneaker",
-        brand: "Nike",
+        category_id:2,
+        brand_id:2 ,
         variants: [
             { id: 101, size: 39, color: "White", stock: 5 },
             { id: 102, size: 40, color: "White", stock: 0 },
