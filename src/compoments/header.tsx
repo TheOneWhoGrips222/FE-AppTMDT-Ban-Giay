@@ -1,4 +1,6 @@
 import './Header.css';
+import { categoriesList } from "../data/categories";
+import { brandsList } from "../data/brands";
 
 export default function Header(){
     return (<>
@@ -14,7 +16,7 @@ export default function Header(){
             <div className="header__main">
                 <div className="container">
                     <a href="./index.html" className="header__logo">
-                        <img src="https://baobihoanggia.com/wp-content/uploads/2023/10/mau-logo-dep-shop-giay-dep-1-500x500.jpg" alt="TTB"/>
+                        <img src="/logo.png" alt="TTB"/>
                     </a>
                     <div className="header__search">
                         <input type="text" placeholder="Tìm kiếm giày Adidas, Nike, Sneaker..."/>
@@ -33,28 +35,24 @@ export default function Header(){
                         <li className="nav-item has-megamenu">
                             <a href="">Loại giày <i className="fa fa-chevron-down"></i></a>
                             <div className="mega-menu">
-                                <div className="subitem"><a href="">Sneaker</a></div>
-                                <div className="subitem"><a href="">Giày chạy bộ (Running)</a></div>
-                                <div className="subitem"><a href="">Giày bóng rổ</a></div>
-                                <div className="subitem"><a href="">Giày thời trang / Casual</a></div>
+                                {categoriesList.map((item) => (
+                                    <div className="subitem" key={item.id}>
+                                        <a href="#!">{item.name}</a>
+                                    </div>
+                                ))}
                             </div>
                         </li>
 
                         <li className="nav-item has-megamenu">
                             <a href="">Hãng <i className="fa fa-chevron-down"></i></a>
                             <div className="mega-menu">
-                                <div className="subitem"><a href="">Nike</a></div>
-                                <div className="subitem"><a href="">Adidas</a></div>
-                                <div className="subitem"><a href="">Li-Ning</a></div>
-                                <div className="subitem"><a href="">Puma</a></div>
-                                <div className="subitem"><a href="">Converse</a></div>
+                                {brandsList.map((item) => (
+                                    <div className="subitem" key={item.id}>
+                                        <a href="#!">{item.name}</a>
+                                    </div>
+                                ))}
                             </div>
                         </li>
-
-                        <li className="nav-item">
-                            <a href="">Giày trẻ em</a>
-                        </li>
-
                         <li className="nav-item">
                             <a href="">Khuyến mãi</a>
                         </li>
