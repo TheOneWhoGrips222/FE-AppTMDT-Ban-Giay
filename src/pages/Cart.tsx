@@ -1,8 +1,14 @@
 
 import { Link } from "react-router-dom";
 import "../styles/Cart.css";
+import { dataProduct } from "../data/products";
 
 export default function Cart() {
+    const cartItems = [{
+        ...dataProduct[0],
+        variant: dataProduct[0].variants[0],
+        quantity: 1
+    }];
     return (
         <section className="cart-page">
             <div className="container">
@@ -10,7 +16,8 @@ export default function Cart() {
                     Giỏ hàng của bạn
                 </h1>
 
-                <div className="cart-empty">
+                {cartItems.length === 0 ? (
+                    <div className="cart-empty">
                     <i className="fa fa-shopping-cart"></i>
 
                     <h2>Giỏ hàng đang trống</h2>
@@ -22,7 +29,42 @@ export default function Cart() {
                     <Link to="/" className="cart-continue">
                         Tiếp tục mua sắm
                     </Link>
-                </div>
+
+                    </div>
+                ) : (
+                    <div className="cart-content">
+                        <div className="cart-list">
+                            {cartItems.map((item) => (
+                                <div className="cart-item" key={`${item.id}-${item.variant.id}`}>
+                                    <img
+                                        src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop&q=60"
+                                        alt={item.name}
+                                        className="cart-item-image"
+                                    />
+                                    <div className="cart-item-info">
+                                        <h2>{item.name}</h2>
+                                        <p>Size: {item.variant.size} | Màu: {item.variant.color}</p>
+                                        <p>Số lượng: {item.quantity}</p>
+                                    </div>
+                                    <strong className="cart-item-price">
+                                        {item.price.toLocaleString("vi-VN")} đ
+                                    </strong>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="cart-summary">
+                            <h2>Tóm tắt đơn hàng</h2>
+                            <div className="cart-summary-row">
+                                <span>Tạm tính</span>
+                                <strong>
+                                    {cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString("vi-VN")} đ
+                                </strong>
+                            </div>
+                            <Link to="/" className="cart-continue">Tiếp tục mua sắm</Link>
+                        </div>
+                    </div>
+                )}
+
             </div>
         </section>
     );
