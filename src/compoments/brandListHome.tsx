@@ -3,6 +3,7 @@ import { Swiper } from "swiper";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
+import {useSelector} from "react-redux";
 
 export default function BrandSlider() {
     const sliderRef = useRef<HTMLDivElement>(null);
@@ -37,37 +38,23 @@ export default function BrandSlider() {
         };
     }, []);
 
+
+    const brands = useSelector((state:any)=>state.brands )
+
+
     return (
         <section className="brands section-padding">
             <div className="container">
                 <h2 className="section-title">Các thương hiệu hàng đầu</h2>
                 <div className="swiper" ref={sliderRef}>
                     <div className="swiper-wrapper">
-                        <div className="swiper-slide brand-item">
-                            <a href="#">
-                                <img src="https://rubee.com.vn/admin/webroot/upload/image/images/logo-thuong-hieu-giay-nike(1).jpg" alt="Nike" />
-                            </a>
-                        </div>
-                        <div className="swiper-slide brand-item">
-                            <a href="#">
-                                <img src="https://rubee.com.vn/wp-content/uploads/2021/06/logo-10-thuong-hieu-giay.jpg" alt="Adidas" />
-                            </a>
-                        </div>
-                        <div className="swiper-slide brand-item">
-                            <a href="#">
-                                <img src="https://rubee.com.vn/admin/webroot/upload/image/images/5(1).jpg" alt="Puma" />
-                            </a>
-                        </div>
-                        <div className="swiper-slide brand-item">
-                            <a href="#">
-                                <img src="https://rubee.com.vn/admin/webroot/upload/image/images/logo-thuong-hieu-giay-converse.jpg" alt="New Balance" />
-                            </a>
-                        </div>
-                        <div className="swiper-slide brand-item">
-                            <a href="#">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Converse_logo.svg" alt="Converse" />
-                            </a>
-                        </div>
+                        {brands.map((brand: any) => (
+                            <div key={brand.id} className="swiper-slide brand-item">
+                                <a href="#">
+                                    <img src={brand.image} alt={brand.name} />
+                                </a>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
