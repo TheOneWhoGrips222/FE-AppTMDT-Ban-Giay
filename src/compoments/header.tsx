@@ -1,4 +1,4 @@
-import './Header.css';
+import '../styles/header.css';
 import { categoriesList } from "../data/categories";
 import { brandsList } from "../data/brands";
 
