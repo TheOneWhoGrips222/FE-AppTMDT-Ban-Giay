@@ -1,4 +1,5 @@
-export function WishList() {
+import '../styles/wishList.css';
+export default function WishList() {
     return (
         <>
             <main className="main-content">
