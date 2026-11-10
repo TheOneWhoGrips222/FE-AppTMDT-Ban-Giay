@@ -147,3 +147,46 @@
 .cart-summary .cart-continue:hover {
     background-color: #0056b3;
 }
+
+@media (max-width: 900px) {
+    .cart-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .cart-list,
+    .cart-summary {
+        padding: 18px;
+    }
+
+    .cart-item {
+        display: grid;
+        grid-template-columns: 90px minmax(0, 1fr);
+        gap: 12px;
+        align-items: start;
+    }
+
+    .cart-item-image {
+        width: 90px;
+        height: 90px;
+    }
+
+    .cart-item-info h2 {
+        font-size: 17px;
+        line-height: 1.35;
+    }
+
+    .cart-item-info p {
+        font-size: 14px;
+    }
+
+    .cart-item-price {
+        grid-column: 2;
+        white-space: normal;
+    }
+
+    .cart-summary h2 {
+        font-size: 18px;
+    }
+}
