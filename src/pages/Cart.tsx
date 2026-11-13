@@ -1,14 +1,11 @@
 
 import { Link } from "react-router-dom";
 import "../styles/Cart.css";
-import { dataProduct } from "../data/products";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
 
 export default function Cart() {
-    const cartItems = [{
-        ...dataProduct[0],
-        variant: dataProduct[0].variants[0],
-        quantity: 1
-    }];
+    const cartItems = useSelector((state: RootState) => state.cart);
     return (
         <section className="cart-page">
             <div className="container">
@@ -35,15 +32,15 @@ export default function Cart() {
                     <div className="cart-content">
                         <div className="cart-list">
                             {cartItems.map((item) => (
-                                <div className="cart-item" key={`${item.id}-${item.variant.id}`}>
+                                <div className="cart-item" key={`${item.productId}-${item.variantId}`}>
                                     <img
-                                        src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop&q=60"
+                                        src={item.image}
                                         alt={item.name}
                                         className="cart-item-image"
                                     />
                                     <div className="cart-item-info">
                                         <h2>{item.name}</h2>
-                                        <p>Size: {item.variant.size} | Màu: {item.variant.color}</p>
+                                        <p>Size: {item.size} | Màu: {item.color}</p>
                                         <p>Số lượng: {item.quantity}</p>
                                     </div>
                                     <strong className="cart-item-price">
