@@ -8,7 +8,7 @@ export const dataUser = [
         phone: "0901234567",
         address: "123 Kha Vạn Cân, Thủ Đức, TP.HCM",
         wishlist: [],
-        avatar:''
+        avatar:'https://img.magnific.com/vector-mien-phi/nguoi-dan-ong-tre-tuoi-mac-ao-so-mi-den_1308-173618.jpg?semt=ais_hybrid&w=740&q=80'
     },
     {
         id: 2,

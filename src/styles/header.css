@@ -163,3 +163,20 @@ a {
     background:  var(--primary-color);
     text-shadow: 0px 0px 10px var(--light-color);
 }
+.user_box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user_avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user_name {
+    font-weight: 500;
+    color: white;
+}

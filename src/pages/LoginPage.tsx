@@ -1,9 +1,10 @@
-import Login from "../compoments/login";
+
+import Form from "../compoments/login";
 
 export function LoginPage(){
     return (
         <>
-           <Login />
+           <Form />
         </>
     )
 }
