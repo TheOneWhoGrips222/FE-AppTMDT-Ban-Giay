@@ -58,7 +58,7 @@ export default function Form(){
 
                             <a href="../TrongBao/Dangky.html" className="no_account">Tôi chưa có tài khoản</a>
                         </div>
-
+                        {errorMessage !== "" ? <p className="error">{errorMessage}</p> : null}
                         <button type="submit" className="register_button">ĐĂNG NHẬP</button>
 
 
