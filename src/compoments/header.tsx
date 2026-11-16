@@ -1,16 +1,71 @@
 import '../styles/header.css';
 import { categoriesList } from "../data/categories";
 import { brandsList } from "../data/brands";
+import {Link} from "react-router-dom";
+import {dataUser} from "../data/user"
+import {useState} from "react";
 
 export default function Header(){
+
+    function isLogin(){
+        if(localStorage.getItem("id") !== null){
+
+            return true;
+        }
+        else if(sessionStorage.getItem("id") !== null){
+            return true;
+        }
+        return false;
+    }
+
+    function findNameById(a){
+        for(let i=0; i < dataUser.length; i++){
+            if(dataUser[i].id == a){
+                avatar = dataUser[i].avatar;
+                return dataUser[i].loginName;
+            }
+        }
+    }
+
+    function logout(){
+        localStorage.removeItem("id");
+        sessionStorage.removeItem("id");
+        window.location.reload();
+    }
+
+
+    let uid = null;
+
+    if (localStorage.getItem("id") != null) {
+        uid = localStorage.getItem("id");
+    }
+    else if (sessionStorage.getItem("id") != null) {
+        uid = sessionStorage.getItem("id");
+    }
+    else {
+        uid = null;
+    }
+    let avatar = "";
+    let user = findNameById(uid);
     return (<>
         <header className="header">
             <div className="header__top-bar">
                 <div className="container">
                     <span><i className="fa fa-phone"></i> Hỗ trợ Kỹ thuật: 1900.1234</span>
                     <span className="spacer"></span>
-                    <a href="">Đăng nhập</a>
-                    <a href="">Đăng ký</a>
+                    {isLogin() === true ?
+                        <>
+                            <div className="user_box">
+                                <img className="user_avatar" src={avatar} alt="avatar" />
+                                <span className="user_name">{user} </span>
+                                <Link to="/login" onClick={logout}>Đăng xuất</Link>
+                            </div>
+                        </>
+                        : <><Link to="/login">Đăng nhập</Link>
+                            <Link to="/register">Đăng ký</Link>
+                        </> }
+
+
                 </div>
             </div>
             <div className="header__main">

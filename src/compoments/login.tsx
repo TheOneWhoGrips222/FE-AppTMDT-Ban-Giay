@@ -7,12 +7,20 @@ export default function Form(){
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [remember, setRemember] = useState(false);
 
     function handleSubmit(e){
         e.preventDefault();
         for(let i = 0; i < dataUser.length; i++ ){
             if((dataUser[i].loginName === userName) || (dataUser[i].email === userName) ){
                 if(dataUser[i].password === password){
+
+                    if(remember === true){
+                        localStorage.setItem("id",dataUser[i].id + "");
+                    }
+                    else{
+                        sessionStorage.setItem("id",dataUser[i].id + "");
+                    }
                   navigate("/");
                   return;
                 }
@@ -53,7 +61,7 @@ export default function Form(){
 
                         <div className="check_row">
                             <label className="check_deal">
-                                <input type="checkbox"/> Ghi nhớ đăng nhập
+                                <input type="checkbox" onChange={(e) => setRemember(e.target.checked)} /> Ghi nhớ đăng nhập
                             </label>
 
                             <a href="../TrongBao/Dangky.html" className="no_account">Tôi chưa có tài khoản</a>
