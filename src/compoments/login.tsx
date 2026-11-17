@@ -21,7 +21,7 @@ export default function Form(){
                     else{
                         sessionStorage.setItem("id",dataUser[i].id + "");
                     }
-                  navigate("/");
+                    window.location.href = "/";
                   return;
                 }
                 else{
