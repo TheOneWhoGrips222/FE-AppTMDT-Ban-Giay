@@ -3,7 +3,7 @@ import { categoriesList } from "../data/categories";
 import { brandsList } from "../data/brands";
 import {Link} from "react-router-dom";
 import {dataUser} from "../data/user"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function Header(){
 
@@ -47,6 +47,7 @@ export default function Header(){
     }
     let avatar = "";
     let user = findNameById(uid);
+
     return (<>
         <header className="header">
             <div className="header__top-bar">
