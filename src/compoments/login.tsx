@@ -1,7 +1,7 @@
 import '../styles/login.css';
 import {dataUser} from "../data/user"
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 export default function Form(){
     const navigate = useNavigate();
     const [userName, setUserName] = useState("");
@@ -64,7 +64,7 @@ export default function Form(){
                                 <input type="checkbox" onChange={(e) => setRemember(e.target.checked)} /> Ghi nhớ đăng nhập
                             </label>
 
-                            <a href="../TrongBao/Dangky.html" className="no_account">Tôi chưa có tài khoản</a>
+                            <Link to={'/register'}>Chưa có tài khoản ?</Link>
                         </div>
                         {errorMessage !== "" ? <p className="error">{errorMessage}</p> : null}
                         <button type="submit" className="register_button">ĐĂNG NHẬP</button>
