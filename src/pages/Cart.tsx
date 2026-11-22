@@ -93,7 +93,31 @@ export default function Cart() {
                                     {subtotal.toLocaleString("vi-VN")} đ
                                 </strong>
                             </div>
-                            <Link to="/" className="cart-continue">Tiếp tục mua sắm</Link>
+
+                            {selectedItems.length > 0 ? (
+                                <Link
+                                    to="/checkout"
+                                    state={{
+                                        selectedKeys: selectedItems.map(item =>
+                                            keyOf(item.productId, item.variantId)
+                                        )
+                                    }}
+                                    className="cart-continue"
+                                >
+                                    Tiến hành thanh toán
+                                </Link>
+                            ) : (
+                                <button
+                                    type="button"
+                                    className="cart-continue"
+                                    disabled
+                                >
+                                    Tiến hành thanh toán
+                                </button>
+                            )}
+
+                            <Link to="/">Tiếp tục mua sắm</Link>
+
                         </div>
                     </div>
                 )}

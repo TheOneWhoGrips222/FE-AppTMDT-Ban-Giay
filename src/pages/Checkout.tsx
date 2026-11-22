@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import "../styles/Checkout.css";
@@ -7,7 +7,16 @@ import "../styles/Checkout.css";
 export default function Checkout() {
     const cartItems = useSelector((state: RootState) => state.cart);
 
-    const subtotal = cartItems.reduce(
+    const location = useLocation();
+    const selectedKeys = (
+        location.state as { selectedKeys?: string[] } | null
+    )?.selectedKeys ?? [];
+
+    const selectedItems = cartItems.filter(item =>
+        selectedKeys.includes(`${item.productId}-${item.variantId}`)
+    );
+
+    const subtotal = selectedItems.reduce(
         (total, item) => total + item.price * item.quantity,
         0
     );
@@ -17,10 +26,18 @@ export default function Checkout() {
             <div className="checkout-container">
                 <h1>Thanh toán đơn hàng</h1>
 
-                {cartItems.length === 0 ? (
+                {selectedItems.length === 0 ? (
                     <div className="checkout-empty">
-                        <h2>Giỏ hàng đang trống</h2>
-                        <p>Vui lòng thêm sản phẩm trước khi thanh toán.</p>
+                        <h2>
+                            {cartItems.length === 0
+                                ? "Giỏ hàng đang trống"
+                                : "Chưa chọn sản phẩm thanh toán"}
+                        </h2>
+                        <p>
+                            {cartItems.length === 0
+                                ? "Vui lòng thêm sản phẩm trước khi thanh toán."
+                                : "Vui lòng chọn sản phẩm trong giỏ hàng để thanh toán."}
+                        </p>
                         <Link to="/cart">Quay lại giỏ hàng</Link>
                     </div>
                 ) : (
@@ -89,7 +106,7 @@ export default function Checkout() {
                         <aside className="checkout-summary">
                             <h2>Đơn hàng của bạn</h2>
 
-                            {cartItems.map((item) => (
+                            {selectedItems.map((item) => (
                                 <div
                                     className="checkout-product"
                                     key={`${item.productId}-${item.variantId}`}
