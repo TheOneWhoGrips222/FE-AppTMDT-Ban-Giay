@@ -1,9 +1,22 @@
-import {dataUser} from "../data/user"
+
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-;
+
+
+type UserItem = {
+    id: number;
+    email: string;
+    password: string;
+    fullName: string;
+    loginName: string;
+    phone: string;
+    address: string;
+    wishlist: string[];
+    avatar: string;
+};
 
 export default function FormRegister(){
+
     const navigate = useNavigate();
      const [form, setForm] = useState({
          loginName: "", fname: "",lname:"", email: "",sdt:"",password: "",confirmPassword: "",
@@ -12,8 +25,13 @@ export default function FormRegister(){
     const [errorMessage, setErrorMessage] = useState("");
 
     function isExistLogin(name: string){
-        for(let i=0; i<dataUser.length; i++){
-            if(dataUser[i].loginName === name){
+        const users = localStorage.getItem("users");
+        if(users === null ){
+            return false;
+        }
+      const listU :UserItem[] = JSON.parse(users);
+        for(let i=0; i<listU.length; i++){
+            if(listU[i].loginName === name){
                 return true;
             }
         }
@@ -21,14 +39,17 @@ export default function FormRegister(){
     }
 
     function isExistEmail(email: string) {
-        for(let i=0; i<dataUser.length; i++){
-            if(dataUser[i].email === email){
-
+        const users = localStorage.getItem("users");
+        if (users === null) {
+            return false;
+        }
+        const listU: UserItem[] = JSON.parse(users);
+        for (let i = 0; i < listU.length; i++) {
+            if (listU[i].email === email) {
                 return true;
             }
         }
         return false;
-
     }
 
     function isConfirmed(password: string, confirmPassword: string){
@@ -53,7 +74,7 @@ export default function FormRegister(){
              return;
          }
          const user = {
-             id: dataUser.length + 1 ,
+             id: 1 ,
              email: form.email,
              password: form.password,
              fullName: form.lname + " " + form.fname,
@@ -63,7 +84,17 @@ export default function FormRegister(){
              wishlist: [],
              avatar: 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
          }
-         dataUser.push(user);
+         if(localStorage.getItem("users") === null){
+             localStorage.setItem("users", JSON.stringify([user]));
+
+         }
+         else{
+            const users :UserItem[] =  JSON.parse(localStorage.getItem("users"));
+            user.id = users.length + 1;
+            users.push(user);
+            localStorage.setItem("users", JSON.stringify(users));
+
+         }
          navigate("/login");
 
     }
@@ -116,7 +147,7 @@ export default function FormRegister(){
                             <div className="check_deal"><input type="checkbox" required/> Xác nhận đồng ý với điều kiện sử dụng thông tin của TTB</div>
                             <div className="check_info"><input type="checkbox" required /> Nhận thông tin/Khuyến mãi từ TTB</div>
                         </div>
-
+                        {errorMessage !== "" ? <p className="error">{errorMessage}</p> : null}
                         <button type="submit" className="register_button">ĐĂNG KÝ</button>
                         <div className="haveaccount"> <Link to={'/login'}>Bạn đã có tài khoản ?</Link> </div>
 

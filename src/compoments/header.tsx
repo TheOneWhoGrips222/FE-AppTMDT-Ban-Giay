@@ -2,8 +2,19 @@ import '../styles/header.css';
 import { categoriesList } from "../data/categories";
 import { brandsList } from "../data/brands";
 import {Link} from "react-router-dom";
-import {dataUser} from "../data/user"
-import {useEffect, useState} from "react";
+
+
+type UserItem = {
+    id: number;
+    email: string;
+    password: string;
+    fullName: string;
+    loginName: string;
+    phone: string;
+    address: string;
+    wishlist: string[];
+    avatar: string;
+};
 
 export default function Header(){
 
@@ -19,10 +30,15 @@ export default function Header(){
     }
 
     function findNameById(a){
-        for(let i=0; i < dataUser.length; i++){
-            if(dataUser[i].id == a){
-                avatar = dataUser[i].avatar;
-                return dataUser[i].loginName;
+        const users = localStorage.getItem("users");
+        if(users === null ){
+            return false;
+        }
+        const listU :UserItem[] = JSON.parse(users);
+        for(let i=0; i < listU.length; i++){
+            if(listU[i].id == a){
+                avatar = listU[i].avatar;
+                return listU[i].loginName;
             }
         }
     }

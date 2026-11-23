@@ -1,7 +1,21 @@
 import '../styles/login.css';
-import {dataUser} from "../data/user"
+
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
+
+
+type UserItem = {
+    id: number;
+    email: string;
+    password: string;
+    fullName: string;
+    loginName: string;
+    phone: string;
+    address: string;
+    wishlist: string[];
+    avatar: string;
+};
+
 export default function Form(){
     const navigate = useNavigate();
     const [userName, setUserName] = useState("");
@@ -11,15 +25,22 @@ export default function Form(){
 
     function handleSubmit(e){
         e.preventDefault();
-        for(let i = 0; i < dataUser.length; i++ ){
-            if((dataUser[i].loginName === userName) || (dataUser[i].email === userName) ){
-                if(dataUser[i].password === password){
+
+        const users = localStorage.getItem("users");
+        if(users === null ){
+            return false;
+        }
+        const listU :UserItem[] = JSON.parse(users);
+
+        for(let i = 0; i < listU.length; i++ ){
+            if((listU[i].loginName === userName) || (listU[i].email === userName) ){
+                if(listU[i].password === password){
 
                     if(remember === true){
-                        localStorage.setItem("id",dataUser[i].id + "");
+                        localStorage.setItem("id",listU[i].id + "");
                     }
                     else{
-                        sessionStorage.setItem("id",dataUser[i].id + "");
+                        sessionStorage.setItem("id",listU[i].id + "");
                     }
                     window.location.href = "/";
                   return;
