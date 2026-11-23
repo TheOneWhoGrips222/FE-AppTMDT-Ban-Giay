@@ -10,15 +10,4 @@ export const dataUser = [
         wishlist: [],
         avatar:'https://img.magnific.com/vector-mien-phi/nguoi-dan-ong-tre-tuoi-mac-ao-so-mi-den_1308-173618.jpg?semt=ais_hybrid&w=740&q=80'
     },
-    {
-        id: 2,
-        email: "khachhang@gmail.com",
-        password: "123",
-        fullName: "Nguyễn Văn A",
-        loginName: "rize",
-        phone: "0909888777",
-        address: "Quận 1, TP.HCM",
-        wishlist: [],
-        avatar:''
-    }
 ];
