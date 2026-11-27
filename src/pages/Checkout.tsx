@@ -1,6 +1,8 @@
 
-import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import type { FormEvent } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUserId, removeFromCart } from "../store/slice/CartSlice";
 import type { RootState } from "../store/store";
 import "../styles/Checkout.css";
 
@@ -20,6 +22,94 @@ export default function Checkout() {
         (total, item) => total + item.price * item.quantity,
         0
     );
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const localId = localStorage.getItem("id");
+        const sessionId = sessionStorage.getItem("id");
+
+        if (localId && sessionId && localId !== sessionId) {
+            alert("Phiên đăng nhập không hợp lệ. Vui lòng đăng xuất và đăng nhập lại.");
+            return;
+        }
+
+        const userId = getCurrentUserId();
+
+        if (!userId) {
+            alert("Vui lòng đăng nhập trước khi đặt hàng.");
+            navigate("/login");
+            return;
+        }
+
+        if (selectedItems.length === 0) {
+            alert("Vui lòng chọn sản phẩm để thanh toán.");
+            return;
+        }
+
+        const formData = new FormData(event.currentTarget);
+        const fullName = String(formData.get("fullName") ?? "").trim();
+        const phone = String(formData.get("phone") ?? "").trim();
+        const address = String(formData.get("address") ?? "").trim();
+        const note = String(formData.get("note") ?? "").trim();
+
+        if (!fullName || !address || !/^0\d{9}$/.test(phone)) {
+            alert("Vui lòng nhập đầy đủ thông tin và số điện thoại hợp lệ.");
+            return;
+        }
+
+        const storageKey = `orders_${userId}`;
+        let orders;
+
+        try {
+            orders = JSON.parse(localStorage.getItem(storageKey) || "[]");
+        } catch {
+            alert("Không đọc được dữ liệu đơn hàng.");
+            return;
+        }
+
+        if (!Array.isArray(orders)) {
+            alert("Dữ liệu đơn hàng không hợp lệ.");
+            return;
+        }
+
+        const order = {
+            id: `COD-${Date.now()}`,
+            userId,
+            fullName,
+            phone,
+            address,
+            note,
+            paymentMethod: "COD",
+            status: "Chờ xác nhận",
+            items: selectedItems.map(item => ({ ...item })),
+            total: subtotal,
+            createdAt: new Date().toISOString()
+        };
+
+        try {
+            localStorage.setItem(
+                storageKey,
+                JSON.stringify([...orders, order])
+            );
+        } catch {
+            alert("Không thể lưu đơn hàng. Vui lòng thử lại.");
+            return;
+        }
+
+        selectedItems.forEach(item => {
+            dispatch(removeFromCart({
+                productId: item.productId,
+                variantId: item.variantId
+            }));
+        });
+
+        alert(`Đặt hàng thành công! Mã đơn: ${order.id}`);
+        navigate("/");
+    };
 
     return (
         <section className="checkout-page">
@@ -44,13 +134,14 @@ export default function Checkout() {
                     <div className="checkout-layout">
                         <form
                             className="checkout-form"
-                            onSubmit={(event) => event.preventDefault()}
+                            onSubmit={handleSubmit}
                         >
                             <h2>Thông tin giao hàng</h2>
 
                             <label htmlFor="checkout-name">Họ và tên</label>
                             <input
                                 id="checkout-name"
+                                name="fullName"
                                 type="text"
                                 placeholder="Nhập họ và tên"
                                 required
@@ -59,6 +150,7 @@ export default function Checkout() {
                             <label htmlFor="checkout-phone">Số điện thoại</label>
                             <input
                                 id="checkout-phone"
+                                name="phone"
                                 type="tel"
                                 placeholder="Nhập số điện thoại"
                                 required
@@ -67,6 +159,7 @@ export default function Checkout() {
                             <label htmlFor="checkout-address">Địa chỉ nhận hàng</label>
                             <input
                                 id="checkout-address"
+                                name="address"
                                 type="text"
                                 placeholder="Số nhà, đường, phường/xã, tỉnh/thành phố"
                                 required
@@ -75,6 +168,7 @@ export default function Checkout() {
                             <label htmlFor="checkout-note">Ghi chú đơn hàng</label>
                             <textarea
                                 id="checkout-note"
+                                name="note"
                                 rows={4}
                                 placeholder="Ghi chú cho đơn hàng (không bắt buộc)"
                             />
@@ -95,9 +189,8 @@ export default function Checkout() {
                             </div>
 
                             <button
-                                type="button"
+                                type="submit"
                                 className="checkout-submit"
-                                disabled
                             >
                                 Đặt hàng
                             </button>
