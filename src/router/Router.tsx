@@ -3,6 +3,7 @@ import {Layout} from "./Layout";
 import Home from "../pages/Home";
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
+import Orders from "../pages/Orders";
 import {WishListPage} from "../pages/WishListPage";
 import {LoginPage} from "../pages/LoginPage";
 import {ProductListPage} from "../pages/ProductListPage";
@@ -25,6 +26,11 @@ export const router = createBrowserRouter([
             {
                 path: "checkout",
                 element: <Checkout />
+            },
+
+            {
+                path: "orders",
+                element: <Orders />
             },
 
             {
