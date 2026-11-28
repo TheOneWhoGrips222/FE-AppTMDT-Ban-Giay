@@ -1,0 +1,152 @@
+
+.orders-page {
+    background: #f4f4f5;
+    min-height: 70vh;
+    padding: 50px 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.orders-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.orders-container > h1 {
+    text-align: center;
+    font-size: 30px;
+    margin: 0 0 35px;
+}
+
+.orders-empty,
+.orders-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+}
+
+.orders-empty {
+    text-align: center;
+}
+
+.orders-empty a {
+    display: inline-block;
+    padding: 12px 20px;
+    margin-top: 12px;
+    background: #6258f5;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.orders-list {
+    display: grid;
+    gap: 20px;
+}
+
+.orders-card-header,
+.orders-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.orders-card-header {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.orders-card-header p,
+.orders-product p {
+    color: #666;
+    font-size: 14px;
+}
+
+.orders-status {
+    color: #916400;
+    background: #fff7db;
+    padding: 8px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.orders-product {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.orders-product img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.orders-product-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.orders-product h3 {
+    font-size: 16px;
+    margin: 0 0 8px;
+}
+
+.orders-product strong,
+.orders-total strong {
+    color: #6258f5;
+}
+
+.orders-total {
+    padding: 20px 0;
+}
+
+.orders-details {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.orders-details summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #6258f5;
+}
+
+.orders-details p {
+    margin: 10px 0 0;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+    .orders-page {
+        padding: 25px 12px;
+    }
+
+    .orders-empty,
+    .orders-card {
+        padding: 18px;
+    }
+
+    .orders-card-header,
+    .orders-total {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .orders-product {
+        flex-wrap: wrap;
+    }
+
+    .orders-product img {
+        width: 75px;
+        height: 75px;
+    }
+
+    .orders-product > strong {
+        margin-left: 91px;
+    }
+}
