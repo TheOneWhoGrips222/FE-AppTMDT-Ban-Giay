@@ -75,6 +75,7 @@ export default function Header(){
                             <div className="user_box">
                                 <img className="user_avatar" src={avatar} alt="avatar" />
                                 <span className="user_name">{user} </span>
+                                <Link to="/orders">Đơn hàng của tôi</Link>
                                 <Link to="/login" onClick={logout}>Đăng xuất</Link>
                             </div>
                         </>
